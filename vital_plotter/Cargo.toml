@@ -1,0 +1,9 @@
+[package]
+name = "vital_plotter"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+eframe = "0.32.3"
+egui_plot = "0.33.0"
+serialport = "4.7.3"

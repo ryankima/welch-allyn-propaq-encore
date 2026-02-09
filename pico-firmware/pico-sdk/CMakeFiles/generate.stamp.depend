@@ -1,0 +1,8 @@
+# CMake generation dependency list for this directory.
+C:/Users/rngki/.pico-sdk/cmake/v3.31.5/share/cmake-3.31/Modules/CMakeASMInformation.cmake
+C:/Users/rngki/.pico-sdk/cmake/v3.31.5/share/cmake-3.31/Modules/Compiler/GNU-ASM.cmake
+C:/Users/rngki/.pico-sdk/cmake/v3.31.5/share/cmake-3.31/Modules/Compiler/GNU.cmake
+C:/Users/rngki/.pico-sdk/sdk/2.1.1/CMakeLists.txt
+C:/Users/rngki/.pico-sdk/sdk/2.1.1/pico_sdk_init.cmake
+C:/Users/rngki/.pico-sdk/sdk/2.1.1/src/common/pico_base_headers/generate_config_header.cmake
+C:/Users/rngki/.pico-sdk/sdk/2.1.1/src/common/pico_base_headers/include/pico/version.h.in

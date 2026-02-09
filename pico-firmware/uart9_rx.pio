@@ -1,0 +1,13 @@
+.program uart9_rx
+; 9-bit UART RX (1 start, 9 data LSB-first, 1 stop)
+; Target: baud = 168000, clk_sys = 125000000
+; Full bit = 744 cycles, Half bit = 372 cycles
+; Implemented with nested loops such that each 'set' value <= 31.
+
+wait 0 pin 0
+set x, 8 [10]
+
+rxloop:
+    in pins, 1
+    jmp x-- rxloop [6]
+    push
