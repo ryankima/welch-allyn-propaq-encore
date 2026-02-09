@@ -1,41 +1,25 @@
-import serial, time, math
+import serial
+import time
 
-ser = serial.Serial("COM3", 38400, timeout=0)
+PORT = 'COM3'  
+BAUDRATE = 9600  
+OUTPUT_FILE = 'output.bin'
 
-def send(seq):
-    ser.write(bytes(seq))
-    time.sleep(0.05)
+try:
+    ser = serial.Serial(PORT, BAUDRATE, timeout=1)
+    print(f"Opened {PORT} at {BAUDRATE} baud. Saving to {OUTPUT_FILE}...")
 
-def test():
-     for sync in range(0xFB, 0x100):  # SYNC byte ≥ 0xFB
-        inv = sync ^ 0xFF
-
-        for length in range(1, 14):  # Max 13 byte payload (16 total)
-            payload = [0xAA] * length  # Can tweak this pattern later
-
-            pkt = bytes([sync, inv, length] + payload)
-            ser.reset_input_buffer()
-            ser.reset_output_buffer()
-
-            ser.write(pkt)
-            print(f"Sent: {[hex(b) for b in pkt]}")
-            time.sleep(0.1)
-            resp = ser.read_all()
-            if resp:
-                print(f"Response: {[hex(b) for b in resp]}")
-
-ser.write(b"\xff\xaa\x55\x00")
-
-i = 1
-while True:
-    data = i.to_bytes((math.floor(math.log2(i))//8)+1, 'big')  # Convert to bytes
-    ser.write(data)
-    print(f"Sent: {data.hex()}")
-    #time.sleep(0.00001)
-    resp = ser.read_all()
-    if resp:
-        print(f"Response: {[hex(b) for b in resp]}")
-        ser.write(resp)  # Echo back the response
-    i += 1
-
-ser.close()
+    with open(OUTPUT_FILE, 'wb') as f:
+        while True:
+            data = ser.read(1024)
+            if data:
+                f.write(data)
+                f.flush()
+except KeyboardInterrupt:
+    print("\nInterrupted by user. Closing...")
+except serial.SerialException as e:
+    print(f"Serial error: {e}")
+finally:
+    if 'ser' in locals() and ser.is_open:
+        ser.close()
+    print("Serial port closed.")
